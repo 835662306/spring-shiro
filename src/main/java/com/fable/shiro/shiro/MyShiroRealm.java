@@ -51,6 +51,7 @@ public class MyShiroRealm extends AuthorizingRealm{
 			info.setRoles(user.getRolesName());
 			List<Role> roleList = user.getRoleList();
 			for (Role role : roleList){
+				System.out.println(role.getPermissionsName());
 				info.addStringPermissions(role.getPermissionsName());
 			}
 			return info;

@@ -11,58 +11,78 @@ import java.util.List;
 @Entity
 @Table(name = "t_role")
 public class Role {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	private String rolename;
+    /**
+     * 角色名称
+     */
+    private String rolename;
 
-	@OneToMany(mappedBy = "role")
-	private List<Permission> permissionList;
+    /**
+     * 描述
+     */
+    private String description;
 
-	@ManyToMany
-	@JoinTable(name = "t_user_role", joinColumns = {@JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
-	private List<User> userList;
+    /**
+     * 一方拥有多方集合
+     */
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinTable(name = "t_role_permission", joinColumns = {@JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "permission_id")})
+    private List<Permission> permissionList;
 
-	public Integer getId() {
-		return id;
-	}
+    @ManyToMany
+    @JoinTable(name = "t_user_role", joinColumns = {@JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private List<User> userList;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getRolename() {
-		return rolename;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setRolename(String rolename) {
-		this.rolename = rolename;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public List<Permission> getPermissionList() {
-		return permissionList;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setPermissionList(List<Permission> permissionList) {
-		this.permissionList = permissionList;
-	}
+    public String getRolename() {
+        return rolename;
+    }
 
-	public List<User> getUserList() {
-		return userList;
-	}
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
+    }
 
-	public void setUserList(List<User> userList) {
-		this.userList = userList;
-	}
+    public List<Permission> getPermissionList() {
+        return permissionList;
+    }
 
-	@Transactional
-	public List<String> getPermissionsName(){
-		List<String> permissionsName = new ArrayList<String>();
-		List<Permission> permissions = getPermissionList();
-		for (Permission permission : permissions){
-			permissionsName.add(permission.getPermissionname());
-		}
-		return permissionsName;
-	}
+    public void setPermissionList(List<Permission> permissionList) {
+        this.permissionList = permissionList;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
+    @Transactional
+    public List<String> getPermissionsName() {
+        List<String> permissionsName = new ArrayList<String>();
+        List<Permission> permissions = getPermissionList();
+        for (Permission permission : permissions) {
+            permissionsName.add(permission.getPermissionname());
+        }
+        return permissionsName;
+    }
 }

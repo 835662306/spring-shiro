@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "t_user")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
 	@NotEmpty(message = "用户名不能为空")

@@ -9,14 +9,19 @@ import javax.persistence.*;
 @Table(name = "t_permission")
 public class Permission {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
+	/** 权限名称 */
 	private String permissionname;
 
-	@ManyToOne
-	@JoinColumn(name = "role_id")
-	private Role role;
+	/** 描述 */
+	private String description;
+
+	/** 多方拥有一方引用 */
+//	@ManyToOne
+//	@JoinTable(name = "t_role_permission", joinColumns = {@JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "permission_id")})
+//	private Role role;
 
 	public Integer getId() {
 		return id;
@@ -24,6 +29,14 @@ public class Permission {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getPermissionname() {
@@ -34,11 +47,11 @@ public class Permission {
 		this.permissionname = permissionname;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
+//	public Role getRole() {
+//		return role;
+//	}
+//
+//	public void setRole(Role role) {
+//		this.role = role;
+//	}
 }
